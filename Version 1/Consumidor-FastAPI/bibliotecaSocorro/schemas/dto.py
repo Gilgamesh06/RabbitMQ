@@ -17,3 +17,13 @@ class LibroResponseDTO(BaseModel):
 
     class Config:
         orm_mode = True  # Habilita el modo ORM para permitir la conversión desde objetos ORM
+
+
+class LibroDeleteDTO(BaseModel):
+    titulo: str = Field(description="TItulo del libro a eliminar")
+
+    class Config:
+        all_population_by_field_name = True
+        from_attributes = True
+
+    

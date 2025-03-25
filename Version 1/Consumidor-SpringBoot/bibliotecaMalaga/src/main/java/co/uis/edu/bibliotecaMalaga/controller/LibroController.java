@@ -29,9 +29,4 @@ public class LibroController {
     }
 
 
-    @DeleteMapping("/elimiar-libro/{titulo}")
-    public LibroResponseDTO removeBook(@PathVariable String titulo){
-        return this.libroService.removeBook(titulo);
-    }
-
 }

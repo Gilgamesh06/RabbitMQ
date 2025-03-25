@@ -23,3 +23,15 @@ async def add_book(libro_dto, db: Session = Depends(get_db)):
 
     else:
         raise HTTPException(status_code=404, detail="Libro ya esta registrado")
+
+
+async def delete_book(libro_dto, db:Session = Depends(get_db)):
+    libro = search_book(libro_dto.titulo,db)
+    if libro is None:
+        raise HTTPException(status_code=404, detail="El Libro no esta registrado")
+    else:
+        db.delete(libro)
+        db.commit()
+        return libro
+    
+    

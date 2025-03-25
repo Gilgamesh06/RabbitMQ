@@ -35,16 +35,22 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672" # Conexión de aplicaciones
+      - "5672:5672"  # Conexión de aplicaciones
       - "15672:15672" # Interfaz de gestión
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: 123456
     networks:
       - my_network
-  backend-productor:
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 20s
+      retries: 5
+      timeout: 5s
+
+  backend-agregar-libro:
     build:
-      context: ./Productor-SpringBoot # Ruta de tu microservicio productor
+      context: ./Productor-SpringBoot  # Ruta de tu microservicio productor en SpringBoot
     ports:
       - "8082:8080"
     environment:
@@ -59,14 +65,26 @@ services:
 
   backend-socorro:
     build:
-      context: ./Consumidor-FastAPI # Ruta de tu microservicio FastAPI (nuevo consumidor)
+      context: ./Consumidor-FastAPI  # Ruta de tu microservicio FastAPI (nuevo consumidor)
     ports:
-      - "8001:8000" # Mapea el puerto interno 8000 a 8001 en host
+      - "8001:8000"  # Mapea el puerto interno 8000 a 8001 en host
     environment:
       - DATABASE_URL=postgresql://Solus:123456@db-socorro:5432/biblioteca_socorro
       - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
     depends_on:
       - db-socorro
+      - rabbitmq
+    networks:
+      - my_network
+
+  backend-eliminar-libro:
+    build:
+      context: ./Productor-FastAPI  # Ruta de tu microservicio productor en FastAPI para eliminar libros
+    ports:
+      - "8002:8000"  # Mapea el puerto interno 8000 a 8002 en host
+    environment:
+      - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
+    depends_on:
       - rabbitmq
     networks:
       - my_network
@@ -78,7 +96,7 @@ services:
       - POSTGRES_USER=Solus
       - POSTGRES_PASSWORD=123456
     ports:
-      - "5434:5432" # Asigna un puerto distinto para evitar conflicto con db-malaga
+      - "5434:5432"  # Asigna un puerto distinto para evitar conflicto con db-malaga
     volumes:
       - postgres-data-socorro:/var/lib/postgresql/data
     networks:

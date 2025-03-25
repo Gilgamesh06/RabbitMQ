@@ -16,16 +16,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    // Constantes para el consumidor
     public static final String EXCHANGE_NAME = "libroExchange";
-    public static final String COMMON_ROUTING_KEY = "common.key";
-    public static final String SPRING_ROUTING_KEY = "spring.key";
-    public static final String CONSUMER_QUEUE_NAME = "libroQueueBiblioteca";
 
-    // Declarar la cola del consumidor
+    // Para agregar libros
+    public static final String ADD_COMMON_ROUTING_KEY = "addbookcommon.key";
+    public static final String ADD_ROUTING_KEY = "addbookmalaga.key";
+    public static final String ADD_QUEUE_NAME = "libroQueueMalagaAdd";
+
+    // Para eliminar libros
+    public static final String DELETE_COMMON_ROUTING_KEY = "deletebookcommon.key";
+    public static final String DELETE_ROUTING_KEY = "deletebookmalaga.key";
+    public static final String DELETE_QUEUE_NAME = "libroQueueMalagaDelete";
+
+    // Declarar cola para agregar libros
     @Bean
-    public Queue consumerQueue() {
-        return new Queue(CONSUMER_QUEUE_NAME, false);
+    public Queue addQueue() {
+        return new Queue(ADD_QUEUE_NAME, false);
+    }
+
+    // Declarar cola para eliminar libros
+    @Bean
+    public Queue deleteQueue() {
+        return new Queue(DELETE_QUEUE_NAME, false);
     }
 
     // Declarar el exchange DirectExchange
@@ -34,19 +46,33 @@ public class RabbitConfig {
         return new DirectExchange(EXCHANGE_NAME);
     }
 
-    // Vinculación para la key común
-    @Bean
-    public Binding bindingConsumerCommon(Queue consumerQueue, DirectExchange libroExchange) {
-        return BindingBuilder.bind(consumerQueue).to(libroExchange).with(COMMON_ROUTING_KEY);
+    // Binding para la cola de agregar libros
+
+    // Para la clave commun
+    @Bean Binding bindingAddQueueCommon(Queue addQueue, DirectExchange libroExchange){
+        return BindingBuilder.bind(addQueue).to(libroExchange).with(ADD_COMMON_ROUTING_KEY);
     }
 
-    // Vinculación para la key spring
+    // Para la clave de spring
     @Bean
-    public Binding bindingConsumerSpring(Queue consumerQueue, DirectExchange libroExchange) {
-        return BindingBuilder.bind(consumerQueue).to(libroExchange).with(SPRING_ROUTING_KEY);
+    public Binding bindingAddQueue(Queue addQueue, DirectExchange libroExchange) {
+        return BindingBuilder.bind(addQueue).to(libroExchange).with(ADD_ROUTING_KEY);
     }
 
-    // Configuración de conexión
+    // Binding para la cola de eliminar libros
+
+    // Para la clave comun
+    @Bean
+    public Binding bindingDeleteQueueCommon(Queue deleteQueue, DirectExchange libroExchange){
+        return BindingBuilder.bind(deleteQueue).to(libroExchange).with(DELETE_COMMON_ROUTING_KEY);
+    }
+
+    // Para la clave de Spring
+    @Bean
+    public Binding bindingDeleteQueue(Queue deleteQueue, DirectExchange libroExchange) {
+        return BindingBuilder.bind(deleteQueue).to(libroExchange).with(DELETE_ROUTING_KEY);
+    }
+
     @Value("${spring.rabbitmq.host}")
     private String rabbitHost;
     @Value("${spring.rabbitmq.port}")
@@ -65,7 +91,6 @@ public class RabbitConfig {
         return connectionFactory;
     }
 
-    // Configuración del convertidor de mensajes con TypeMapper
     @Bean
     public Jackson2JsonMessageConverter jsonMessageConverter() {
         Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
@@ -78,7 +103,6 @@ public class RabbitConfig {
         return converter;
     }
 
-    // RabbitTemplate para enviar/recibir mensajes
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);

@@ -15,11 +15,9 @@ public class RabbitConfig {
 
     // Constantes para el productor
     public static final String EXCHANGE_NAME = "libroExchange";
-    public static final String COMMON_ROUTING_KEY = "common.key";
-    // Por ejemplo, si se quiere enviar solo a SpringBoot:
-    public static final String SPRINGBOOT_ROUTING_KEY = "spring.key";
-    // Para el consumidor FastAPI:
-    public static final String FAST_API_ROUTING_KEY = "fast.key";
+    public static final String COMMON_ROUTING_KEY = "addbookcommon.key";
+    public static final String MALAGA_ROUTING_KEY = "addbookmalaga.key";
+    public static final String SOCORRO_ROUTING_KEY = "addbooksocorro.key";
 
 
     // Declarar el exchange (DirectExchange)
