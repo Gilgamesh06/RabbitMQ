@@ -1,0 +1,107 @@
+# Verision: 1
+
+1. **Estructura**
+    * 3 Consumidores
+        * 3 DataBase
+    * 3 Productores
+    * 1 RabbitMQ
+
+  ## docker-compose
+
+  * Archivo que permite desplegar los diferentes contenedores conectarlos a la misma red,agregar variables de entorno y mappear puertos
+
+    ```yml
+        version: "3.8"
+        services:
+        backend-malaga:
+            build:
+            context: ./Consumidor-SpringBoot
+            ports:
+            - "8081:8080"
+            environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://db-malaga:5432/biblioteca_malaga
+            - SPRING_DATASOURCE_USERNAME=Solus
+            - SPRING_DATASOURCE_PASSWORD=123456
+            - SPRING_RABBITMQ_HOST=rabbitmq
+            - SPRING_RABBITMQ_PORT=5672
+            - SPRING_RABBITMQ_USERNAME=admin
+            - SPRING_RABBITMQ_PASSWORD=123456
+            depends_on:
+            - db-malaga
+            - rabbitmq
+            networks:
+            - my_network
+
+        db-malaga:
+            image: postgres:14
+            environment:
+            - POSTGRES_DB=biblioteca_malaga
+            - POSTGRES_USER=Solus
+            - POSTGRES_PASSWORD=123456
+            ports:
+            - "5433:5432"
+            volumes:
+            - postgres-data-malaga:/var/lib/postgresql/data
+            networks:
+            - my_network
+
+        rabbitmq:
+            image: rabbitmq:3-management
+            ports:
+            - "5672:5672" # Conexión de aplicaciones
+            - "15672:15672" # Interfaz de gestión
+            environment:
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: 123456
+            networks:
+            - my_network
+        backend-productor:
+            build:
+            context: ./Productor-SpringBoot # Ruta de tu microservicio productor
+            ports:
+            - "8082:8080"
+            environment:
+            - SPRING_RABBITMQ_HOST=rabbitmq
+            - SPRING_RABBITMQ_PORT=5672
+            - SPRING_RABBITMQ_USERNAME=admin
+            - SPRING_RABBITMQ_PASSWORD=123456
+            depends_on:
+            - rabbitmq
+            networks:
+            - my_network
+
+        backend-socorro:
+            build:
+            context: ./Consumidor-FastAPI # Ruta de tu microservicio FastAPI (nuevo consumidor)
+            ports:
+            - "8001:8000" # Mapea el puerto interno 8000 a 8001 en host
+            environment:
+            - DATABASE_URL=postgresql://Solus:123456@db-socorro:5432/biblioteca_socorro
+            - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
+            depends_on:
+            - db-socorro
+            - rabbitmq
+            networks:
+            - my_network
+
+        db-socorro:
+            image: postgres:14
+            environment:
+            - POSTGRES_DB=biblioteca_socorro
+            - POSTGRES_USER=Solus
+            - POSTGRES_PASSWORD=123456
+            ports:
+            - "5434:5432" # Asigna un puerto distinto para evitar conflicto con db-malaga
+            volumes:
+            - postgres-data-socorro:/var/lib/postgresql/data
+            networks:
+            - my_network
+
+        volumes:
+        postgres-data-malaga:
+        postgres-data-socorro:
+
+        networks:
+        my_network:
+            driver: bridge
+    ```
