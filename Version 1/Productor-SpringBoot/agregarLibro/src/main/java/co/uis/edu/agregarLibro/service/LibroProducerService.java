@@ -4,6 +4,7 @@ import co.uis.edu.agregarLibro.configuration.RabbitConfig;
 
 import co.uis.edu.agregarLibro.exception.NotFoundException;
 import co.uis.edu.agregarLibro.model.dto.LibroAddDTO;
+import co.uis.edu.agregarLibro.model.dto.LibroSendDTO;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +20,27 @@ public class LibroProducerService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void addBook(LibroAddDTO libroAddDTO, String destino) throws NotFoundException {
+    public LibroSendDTO addBook(LibroAddDTO libroAddDTO, String destino) throws NotFoundException {
         String destinolower = destino.toLowerCase();
+        String sede = "";
         if( destinolower.equals(MALAGA)){
+            sede = "Malaga";
             this.rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, RabbitConfig.MALAGA_ROUTING_KEY, libroAddDTO);
         }
         else if (destinolower.equals(SOCORRO)){
+            sede = "Socorro";
             this.rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, RabbitConfig.SOCORRO_ROUTING_KEY, libroAddDTO);
 
-        } else if (destinolower.equals(COMMON)) {
+        } else if (destinolower.equals(COMMON)){
+            sede = "Todas";
             this.rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, RabbitConfig.COMMON_ROUTING_KEY, libroAddDTO);
         }else{
             throw new NotFoundException("destino no encontrado: "+destino);
         }
+        LibroSendDTO libroSendDTO = new LibroSendDTO();
+        libroSendDTO.setTitulo(libroAddDTO.getTitulo());
+        libroSendDTO.setSede(sede);
+        return libroSendDTO;
 
     }
 

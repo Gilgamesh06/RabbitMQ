@@ -17,6 +17,5 @@ async def eliminar_libro(destino: str, libro_delete: LibroDeleteDTO):
     else:
         raise HTTPException(status_code=400, detail="Destino no válido")
     
-    mensaje = libro_delete.json()
-    return await send_mensage(mensaje, key)
+    return await send_mensage(libro_delete, key)
 

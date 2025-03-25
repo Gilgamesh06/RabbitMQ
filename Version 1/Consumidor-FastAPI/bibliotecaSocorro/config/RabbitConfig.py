@@ -16,7 +16,7 @@ ADD_QUEUE_NAME = "libroQueueSocorroAdd"
 DELETE_QUEUE_NAME = "libroQueueSocorroDelete"
 
 # Claves para agregar libro
-ADD_ROUTING_KEY = "addbooksocorro.key"     # o "addcommon.key" para envío a ambos
+ADD_ROUTING_KEY = "addbooksocorro.key"
 ADD_COMMON_ROUTING_KEY = "addbookcommon.key"
 
 # Claves para eliminar libro
@@ -36,9 +36,10 @@ async def setup_rabbitmq():
     # Vincular las colas al exchange con las routing keys correspondientes
     await add_queue.bind(exchange, routing_key=ADD_ROUTING_KEY)
     await delete_queue.bind(exchange, routing_key=DELETE_ROUTING_KEY)
-    # (Opcional: también puedes vincular las colas a claves comunes, por ejemplo:)
-    # await add_queue.bind(exchange, routing_key="addcommon.key")
-    # await delete_queue.bind(exchange, routing_key="deletecommon.key")
+    # Vicular las colas al exange con las claves comunes
+    await add_queue.bind(exchange, routing_key=ADD_COMMON_ROUTING_KEY)
+    await delete_queue.bind(exchange, routing_key=DELETE_COMMON_ROUTING_KEY)
+
     return connection, channel, exchange, add_queue, delete_queue
 
 async def on_message(message: aio_pika.IncomingMessage):

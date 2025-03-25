@@ -16,11 +16,20 @@ async def setup_rabbitmq():
     exchange = await channel.declare_exchange(EXCHANGE_NAME, aio_pika.ExchangeType.DIRECT, durable=True)
     return connection,exchange
 
-async def send_mensage(mensaje,consumidor):
-    connection, exchange = setup_rabbitmq()
+async def send_mensage(libro_delete,key):
+    mensaje = libro_delete.json()
+    connection, exchange = await setup_rabbitmq()
     await exchange.publish(
         aio_pika.Message(body=mensaje.encode("utf-8")),
-        routing_key=consumidor
+        routing_key=key
     )
     await connection.close()
-    return {"message": "Mensaje enviado", "routing_key": consumidor}
+    if( key == MALAGA_ROUTING_KEY):
+        sede="Malaga"
+    elif(key == SOCORRO_ROUTING_KEY):
+        sede="Socorro"
+    else:
+        sede="Todas"
+
+    return {"Eliminar Libro": libro_delete.titulo , "Sede": sede}
+
