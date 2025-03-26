@@ -18,7 +18,7 @@ public class RabbitConfig {
     public static final String COMMON_ROUTING_KEY = "addbookcommon.key";
     public static final String MALAGA_ROUTING_KEY = "addbookmalaga.key";
     public static final String SOCORRO_ROUTING_KEY = "addbooksocorro.key";
-
+    public static final String BARBOSA_ROUTING_KEY = "addbookbarbosa.key";
 
     // Declarar el exchange (DirectExchange)
     @Bean

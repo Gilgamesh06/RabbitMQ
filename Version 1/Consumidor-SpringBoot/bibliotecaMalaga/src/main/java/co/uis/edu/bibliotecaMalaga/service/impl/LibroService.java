@@ -32,6 +32,27 @@ public class LibroService implements IcrudLibro {
         return dto;
     }
 
+    private Optional<Libro> searchBook(String titulo){
+        Optional<Libro> libro = this.libroRepository.findByTitulo(titulo);
+        return libro;
+    }
+
+    private Libro atributesConfirm(Libro libro, LibroUpdateDTO libroUpdateDTO){
+        // Actualiza solo si el autor no es nulo y no está en blanco
+        if (libroUpdateDTO.getAutor() != null && !libroUpdateDTO.getAutor().isBlank()) {
+            libro.setAutor(libroUpdateDTO.getAutor());
+        }
+        // Actualiza solo si la descripción no es nula y no está en blanco
+        if (libroUpdateDTO.getDescripcion() != null && !libroUpdateDTO.getDescripcion().isBlank()) {
+            libro.setDescripcion(libroUpdateDTO.getDescripcion());
+        }
+        // Actualiza solo si la fecha de publicación no es nula
+        if (libroUpdateDTO.getFechaPublicacion() != null) {
+            libro.setFechaPublicacion(libroUpdateDTO.getFechaPublicacion());
+        }
+        return libro;
+    }
+
     @Override
     public List<LibroResponseDTO> getAllBooks() {
         List<Libro> listaLibros = this.libroRepository.findAll();
@@ -42,13 +63,23 @@ public class LibroService implements IcrudLibro {
 
     @Override
     public LibroResponseDTO getBook(String titulo) {
-        Optional<Libro> libro = this.libroRepository.findByTitulo(titulo);
+        Optional<Libro> libro = searchBook(titulo);
         return this.convertirALibroResponseDTO(libro.orElse(null));
     }
 
     @Override
     public LibroResponseDTO updateBook(LibroUpdateDTO libroUpdateDTO) {
-        return null;
+        Optional<Libro> libroOpt = searchBook(libroUpdateDTO.getTitulo());
+
+        if (libroOpt.isPresent()) {
+            // Obtiene el libro existente
+            Libro libro = libroOpt.get();
+            // Guarda los cambios en la base de datos
+            this.libroRepository.save(atributesConfirm(libro,libroUpdateDTO)); // Este metodo persiste los cambios
+            // Convierte el libro actualizado a DTO y lo devuelve
+            return this.convertirALibroResponseDTO(libro);
+        }
+        throw new LibroNoEncontradoException("El libro con el título " + libroUpdateDTO.getTitulo() + " no existe.");
     }
 
     @Override
@@ -62,28 +93,25 @@ public class LibroService implements IcrudLibro {
             libro.setAutor(libroAddDTO.getAutor());
             libro.setDescripcion(libroAddDTO.getDescripcion());
             libro.setFechaPublicacion(libroAddDTO.getFechaPublicacion());
-
             // Guardar el libro en la base de datos
             Libro libroGuardado = this.libroRepository.save(libro);
-
             // Convertir y retornar el DTO
             return this.convertirALibroResponseDTO(libroGuardado);
         }
-
-        // Si el libro ya existe, puedes lanzar una excepción o retornar un valor específico
         throw new LibroEncontradoException("El libro con el título " + libroAddDTO.getTitulo() + " ya existe.");
     }
+
     @Override
     public LibroResponseDTO removeBook(String titulo) {
-        Optional<Libro> libroOPT  = this.libroRepository.findByTitulo(titulo);
-        if(libroOPT.isEmpty()){
-            throw new LibroNoEncontradoException("El libro con el título " + titulo + " No existe.");
-        }
-        else{
+        Optional<Libro> libroOPT = searchBook(titulo);
 
-            this.libroRepository.deleteById(libroOPT.get().getId());
-            return convertirALibroResponseDTO(libroOPT.get());
+        if (libroOPT.isEmpty()) {
+            throw new LibroNoEncontradoException("El libro con el título " + titulo + " no existe.");
+        } else {
+            Libro libro = libroOPT.get(); // Obtiene el libro existente
+            this.libroRepository.delete(libro); // Elimina el libro
+            return convertirALibroResponseDTO(libro); // Devuelve el DTO del libro eliminado
         }
-
     }
+
 }

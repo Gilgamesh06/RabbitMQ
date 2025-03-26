@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  backend-malaga:
+  consumidor-malaga:
     build:
       context: ./Consumidor-SpringBoot
     ports:
@@ -48,7 +48,7 @@ services:
       retries: 5
       timeout: 5s
 
-  backend-agregar-libro:
+  productor-agregar-libro:
     build:
       context: ./Productor-SpringBoot  # Ruta de tu microservicio productor en SpringBoot
     ports:
@@ -63,7 +63,7 @@ services:
     networks:
       - my_network
 
-  backend-socorro:
+  consumidor-socorro:
     build:
       context: ./Consumidor-FastAPI  # Ruta de tu microservicio FastAPI (nuevo consumidor)
     ports:
@@ -77,11 +77,23 @@ services:
     networks:
       - my_network
 
-  backend-eliminar-libro:
+  productor-eliminar-libro:
     build:
       context: ./Productor-FastAPI  # Ruta de tu microservicio productor en FastAPI para eliminar libros
     ports:
       - "8002:8000"  # Mapea el puerto interno 8000 a 8002 en host
+    environment:
+      - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
+    depends_on:
+      - rabbitmq
+    networks:
+      - my_network
+
+  productor-actualizar-libro:
+    build:
+      context: ./Productor-FastAPI-Update  # Ruta de tu microservicio productor en FastAPI para actualizar libros
+    ports:
+      - "8003:8000"  # Mapea el puerto interno 8000 a 8002 en host
     environment:
       - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
     depends_on:

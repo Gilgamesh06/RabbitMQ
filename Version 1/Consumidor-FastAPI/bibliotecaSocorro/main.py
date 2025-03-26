@@ -5,7 +5,7 @@ from config.db import init_db
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(libro_router , prefix="/api/v1/biblioteca-socorro", tags=["Libros"])
+app.include_router(libro_router , prefix="/api/v1/biblioteca-socorro", tags=["Search Books"])
 
 @app.get("/")
 def read_root():

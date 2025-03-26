@@ -28,11 +28,23 @@ public class RabbitConfig {
     public static final String DELETE_ROUTING_KEY = "deletebookmalaga.key";
     public static final String DELETE_QUEUE_NAME = "libroQueueMalagaDelete";
 
+    // Para actualizar libros
+    public static final String UPDATE_COMMON_ROUTING_KEY = "updatebookcommon.key";
+    public static final String UPDATE_ROUTING_KEY = "updatebookmalaga.key";
+    public static final String UPDATE_QUEUE_NAME = "libroQueueMalagaUpdate";
+
     // Declarar cola para agregar libros
     @Bean
     public Queue addQueue() {
         return new Queue(ADD_QUEUE_NAME, false);
     }
+
+    // Declarar cola para actualizar libros
+    @Bean
+    public Queue updateQueue() {
+        return new Queue(UPDATE_QUEUE_NAME, false);
+    }
+
 
     // Declarar cola para eliminar libros
     @Bean
@@ -57,6 +69,19 @@ public class RabbitConfig {
     @Bean
     public Binding bindingAddQueue(Queue addQueue, DirectExchange libroExchange) {
         return BindingBuilder.bind(addQueue).to(libroExchange).with(ADD_ROUTING_KEY);
+    }
+
+    // Binding para la cola de actualizar libros
+
+    // Para la clave commun
+    @Bean Binding bindingUpdateQueueCommon(Queue updateQueue, DirectExchange libroExchange){
+        return BindingBuilder.bind(updateQueue).to(libroExchange).with(UPDATE_COMMON_ROUTING_KEY);
+    }
+
+    // Para la clave de spring
+    @Bean
+    public Binding bindingUpdateQueue(Queue updateQueue, DirectExchange libroExchange) {
+        return BindingBuilder.bind(updateQueue).to(libroExchange).with(UPDATE_ROUTING_KEY);
     }
 
     // Binding para la cola de eliminar libros

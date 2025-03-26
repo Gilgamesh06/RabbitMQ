@@ -24,6 +24,21 @@ async def add_book(libro_dto, db: Session = Depends(get_db)):
     else:
         raise HTTPException(status_code=404, detail="Libro ya esta registrado")
 
+async def update_book(libro_dto, db:Session = Depends(get_db)):
+    libro = search_book(libro_dto.titulo,db)
+    if libro is None:
+        raise HTTPException(status_code=404, detail="Libro No encontrado")
+    else:
+        if libro_dto.autor is not None and libro_dto.autor.strip() != "":
+            libro.autor= libro_dto.autor
+        if libro_dto.descripcion is not None and libro_dto.descripcion.strip() != "":
+            libro.descripcion=libro_dto.descripcion
+        if libro_dto.fecha_publicacion is not None:
+            libro.fecha_publicacion=libro_dto.fecha_publicacion
+
+        db.commit()
+        db.refresh(libro)
+        return libro
 
 async def delete_book(libro_dto, db:Session = Depends(get_db)):
     libro = search_book(libro_dto.titulo,db)

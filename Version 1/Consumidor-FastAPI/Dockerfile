@@ -18,4 +18,5 @@ ENV PYTHONPATH=/app
 # Expone el puerto en el que se ejecutará la app
 EXPOSE 8000
 # Espera a que RabbitMQ (hostname 'rabbitmq') esté disponible antes de iniciar uvicorn
-CMD ["/app/wait-for-it.sh", "rabbitmq:5672", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/app/wait-for-it.sh", "rabbitmq:5672", "-t", "60", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+

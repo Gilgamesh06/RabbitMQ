@@ -15,6 +15,7 @@ public class LibroProducerService {
     private static final String COMMON = "common";
     private static final String SOCORRO = "socorro";
     private static final String MALAGA = "malaga";
+    private static final String BARBOSA = "barbosa";
 
     public LibroProducerService(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
@@ -27,10 +28,12 @@ public class LibroProducerService {
             sede = "Malaga";
             this.rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, RabbitConfig.MALAGA_ROUTING_KEY, libroAddDTO);
         }
-        else if (destinolower.equals(SOCORRO)){
+        else if (destinolower.equals(SOCORRO)) {
             sede = "Socorro";
             this.rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, RabbitConfig.SOCORRO_ROUTING_KEY, libroAddDTO);
-
+        }else if (destinolower.equals(BARBOSA)){
+                sede = "Barbosa";
+                this.rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, RabbitConfig.BARBOSA_ROUTING_KEY, libroAddDTO);
         } else if (destinolower.equals(COMMON)){
             sede = "Todas";
             this.rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, RabbitConfig.COMMON_ROUTING_KEY, libroAddDTO);
