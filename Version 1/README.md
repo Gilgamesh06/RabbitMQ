@@ -1,5 +1,7 @@
 # Proceso de despliege
 
+![Esquema version](../images/Diagrama_1.png)
+
 * A continuacion se dan los pasos a seguir para desplegar la version 1 del proyecto
 
     ## Pasos iniciales
