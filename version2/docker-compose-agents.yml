@@ -1,0 +1,117 @@
+version: "3.9"
+
+services:
+  consumidor-malaga:
+    build:
+      context: ../Version 1/Consumidor-SpringBoot/
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-malaga:5432/biblioteca_malaga
+      - SPRING_DATASOURCE_USERNAME=Solus
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - SPRING_RABBITMQ_HOST=10.6.101.95
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=123456
+    depends_on:
+      - db-malaga
+    networks:
+      - my_network
+
+  consumidor-node-barbosa:
+    build:
+      context: ../Version 1/Consumidor-NodeJS
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://Solus:123456@db-barbosa:5432/biblioteca_barbosa
+      - RABBITMQ_URL=amqp://admin:123456@10.6.101.95:5672/
+    depends_on:
+      - db-barbosa
+    networks:
+      - my_network
+
+  db-barbosa:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=biblioteca_barbosa
+      - POSTGRES_USER=Solus
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5435:5432"
+    networks:
+      - my_network
+
+  db-malaga:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=biblioteca_malaga
+      - POSTGRES_USER=Solus
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5433:5432"
+    networks:
+      - my_network
+
+  productor-agregar-libro:
+    build:
+      context: ../Version 1/Productor-SpringBoot
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_RABBITMQ_HOST=10.6.101.95
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=123456
+    networks:
+      - my_network
+
+  consumidor-socorro:
+    build:
+      context: ../Version 1/Consumidor-FastAPI
+    ports:
+      - "8001:8000"
+    environment:
+      - DATABASE_URL=postgresql://Solus:123456@db-socorro:5432/biblioteca_socorro
+      - RABBITMQ_URL=amqp://admin:123456@10.6.101.95:5672/
+    depends_on:
+      - db-socorro
+    networks:
+      - my_network
+
+  productor-eliminar-libro:
+    build:
+      context: ../Version 1/Productor-FastAPI
+    ports:
+      - "8002:8000"
+    environment:
+      - RABBITMQ_URL=amqp://admin:123456@10.6.101.95:5672/
+    networks:
+      - my_network
+
+  productor-actualizar-libro:
+    build:
+      context: ../Version 1/Productor-FastAPI-Update
+    ports:
+      - "8003:8000"
+    environment:
+      - RABBITMQ_URL=amqp://admin:123456@10.6.101.95:5672/
+    networks:
+      - my_network
+
+  db-socorro:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=biblioteca_socorro
+      - POSTGRES_USER=Solus
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5434:5432"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
