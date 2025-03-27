@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   consumidor-malaga:
     build:
@@ -19,6 +20,33 @@ services:
     networks:
       - my_network
 
+  consumidor-node-barbosa:
+    build:
+      context: ./Consumidor-NodeJS
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://Solus:123456@db-barbosa:5432/biblioteca_barbosa
+      - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
+    depends_on:
+      - db-barbosa
+      - rabbitmq
+    networks:
+      - my_network
+
+  db-barbosa:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=biblioteca_barbosa
+      - POSTGRES_USER=Solus
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres-data-barbosa:/var/lib/postgresql/data
+    networks:
+      - my_network
+
   db-malaga:
     image: postgres:14
     environment:
@@ -35,8 +63,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"  # Conexión de aplicaciones
-      - "15672:15672" # Interfaz de gestión
+      - "5672:5672"
+      - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: 123456
@@ -50,7 +78,7 @@ services:
 
   productor-agregar-libro:
     build:
-      context: ./Productor-SpringBoot  # Ruta de tu microservicio productor en SpringBoot
+      context: ./Productor-SpringBoot
     ports:
       - "8082:8080"
     environment:
@@ -65,9 +93,9 @@ services:
 
   consumidor-socorro:
     build:
-      context: ./Consumidor-FastAPI  # Ruta de tu microservicio FastAPI (nuevo consumidor)
+      context: ./Consumidor-FastAPI
     ports:
-      - "8001:8000"  # Mapea el puerto interno 8000 a 8001 en host
+      - "8001:8000"
     environment:
       - DATABASE_URL=postgresql://Solus:123456@db-socorro:5432/biblioteca_socorro
       - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
@@ -79,9 +107,9 @@ services:
 
   productor-eliminar-libro:
     build:
-      context: ./Productor-FastAPI  # Ruta de tu microservicio productor en FastAPI para eliminar libros
+      context: ./Productor-FastAPI
     ports:
-      - "8002:8000"  # Mapea el puerto interno 8000 a 8002 en host
+      - "8002:8000"
     environment:
       - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
     depends_on:
@@ -91,9 +119,9 @@ services:
 
   productor-actualizar-libro:
     build:
-      context: ./Productor-FastAPI-Update  # Ruta de tu microservicio productor en FastAPI para actualizar libros
+      context: ./Productor-FastAPI-Update
     ports:
-      - "8003:8000"  # Mapea el puerto interno 8000 a 8002 en host
+      - "8003:8000"
     environment:
       - RABBITMQ_URL=amqp://admin:123456@rabbitmq:5672/
     depends_on:
@@ -108,13 +136,14 @@ services:
       - POSTGRES_USER=Solus
       - POSTGRES_PASSWORD=123456
     ports:
-      - "5434:5432"  # Asigna un puerto distinto para evitar conflicto con db-malaga
+      - "5434:5432"
     volumes:
       - postgres-data-socorro:/var/lib/postgresql/data
     networks:
       - my_network
 
 volumes:
+  postgres-data-barbosa:
   postgres-data-malaga:
   postgres-data-socorro:
 
