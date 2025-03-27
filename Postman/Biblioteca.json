@@ -1,0 +1,878 @@
+{
+  "info": {
+    "name": "Biblioteca",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "bruno",
+      "event": []
+    },
+    {
+      "name": "Barbosa",
+      "item": [
+        {
+          "name": "Actualizar",
+          "item": [
+            {
+              "name": "Libro",
+              "event": [],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8003/api/v1/productor/actualizar-libro/malaga",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8003"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "actualizar-libro",
+                    "malaga"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"La vorágine\",\n  \"autor\": \"José Eustasio Rivera\",\n  \"descripcion\": \"Una novela sobre la explotación del caucho.\",\n  \"fecha_publicacion\": \"1944-01-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Agregar",
+          "item": [
+            {
+              "name": "Libro 1",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/barbosa",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "barbosa"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"Don Quijote de la Mancha\",\n  \"autor\": \"Miguel de Cervantes\",\n  \"descripcion\": \"Las aventuras de un hidalgo que se convierte en caballero andante.\",\n  \"fechaPublicacion\": \"1605-01-16\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Libro 2",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/barbosa",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "barbosa"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"La sombra del viento\",\n  \"autor\": \"Carlos Ruiz Zafón\",\n  \"descripcion\": \"Un joven descubre un libro que cambiará su vida en la Barcelona de la posguerra.\",\n  \"fechaPublicacion\": \"2001-04-17\"\n}\n",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar",
+          "item": [
+            {
+              "name": "Delete",
+              "event": [],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8002/api/v1/productor/eliminar-libro/barbosa",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8002"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "eliminar-libro",
+                    "barbosa"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"La sombra del viento\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ListarLibros",
+      "item": [
+        {
+          "name": "Barbosa",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:3000/api/v1/biblioteca-barbosa/libros",
+              "protocol": "http",
+              "host": [
+                "localhost:3000"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "biblioteca-barbosa",
+                "libros"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Malaga",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:8081/api/v1/biblioteca-malaga/listar-libros",
+              "protocol": "http",
+              "host": [
+                "localhost:8081"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "biblioteca-malaga",
+                "listar-libros"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Socorro",
+          "event": [],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "http://localhost:8001/api/v1/biblioteca-socorro/listar-libros",
+              "protocol": "http",
+              "host": [
+                "localhost:8001"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "biblioteca-socorro",
+                "listar-libros"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Malaga",
+      "item": [
+        {
+          "name": "Actualizar",
+          "item": [
+            {
+              "name": "Libro La vorágine",
+              "event": [],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8003/api/v1/productor/actualizar-libro/malaga",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8003"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "actualizar-libro",
+                    "malaga"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"La vorágine\",\n  \"autor\": \"José Eustasio Rivera\",\n  \"descripcion\": \"Una novela sobre la explotación del caucho.\",\n  \"fecha_publicacion\": \"1944-01-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Agregar",
+          "item": [
+            {
+              "name": "Libro 1",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/malaga",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "malaga"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n        \"titulo\": \"Cien años de soledad\",\n        \"autor\": \"Gabriel Garcia Marquez\",\n        \"descripcion\": \"La historia de la familia Buendía en el pueblo ficticio de Macondo.\",\n        \"fechaPublicacion\": \"1967-05-30\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Libro 2",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/malaga",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "malaga"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"El amor en los tiempos del cólera\",\n  \"autor\": \"Gabriel Garcia Marquez\",\n  \"descripcion\": \"Una historia de amor que abarca más de medio siglo.\",\n  \"fechaPublicacion\": \"1985-03-05\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Libro 3",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/malaga",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "malaga"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"La casa de los espíritus\",\n  \"autor\": \"Isabel Allende\",\n  \"descripcion\": \"Una saga familiar que entrelaza lo real y lo mágico.\",\n  \"fechaPublicacion\": \"1982-01-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar",
+          "item": [
+            {
+              "name": "LIbro Cien años de soledad",
+              "event": [],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8002/api/v1/productor/eliminar-libro/malaga",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8002"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "eliminar-libro",
+                    "malaga"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"Cien años de soledad\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Socorro",
+      "item": [
+        {
+          "name": "Actualizar",
+          "item": [
+            {
+              "name": "Libro La vorágine",
+              "event": [],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8003/api/v1/productor/actualizar-libro/socorro",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8003"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "actualizar-libro",
+                    "socorro"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"La vorágine\",\n  \"autor\": \"José Eustasio Rivera\",\n  \"descripcion\": \"Una novela sobre la explotación del caucho.\",\n  \"fecha_publicacion\": \"1944-01-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Agregar",
+          "item": [
+            {
+              "name": "Libro 1",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/socorro",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "socorro"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"Los funerales de la Mamá Grande\",\n  \"autor\": \"Gabriel Garcia Marquez\",\n  \"descripcion\": \"Una serie de relatos que exploran la vida y la muerte en un pueblo caribeño.\",\n  \"fechaPublicacion\": \"1962-01-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Libro 2",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/socorro",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "socorro"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"El túnel\",\n  \"autor\": \"Ernesto Sabato\",\n  \"descripcion\": \"La historia de un pintor obsesionado con una mujer.\",\n  \"fechaPublicacion\": \"1948-01-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar",
+          "item": [
+            {
+              "name": "Libro El túnel",
+              "event": [],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8002/api/v1/productor/eliminar-libro/socorro",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8002"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "eliminar-libro",
+                    "socorro"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\":\"El túnel\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Todas",
+      "item": [
+        {
+          "name": "Agregar",
+          "item": [
+            {
+              "name": "Libro 1",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/common",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "common"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"Delirio\",\n  \"autor\": \"Laura Restrepo\",\n  \"descripcion\": \"La historia de una mujer que pierde la razón y su relación con su esposo.\",\n  \"fechaPublicacion\": \"2004-01-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Libro 2",
+              "event": [],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8082/api/v1/productor/agregar-libro/common",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8082"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "agregar-libro",
+                    "common"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"La vorágine\",\n  \"autor\": \"José Eustasio Rivera\",\n  \"descripcion\": \"Una novela sobre la explotación del caucho en la selva amazónica.\",\n  \"fechaPublicacion\": \"1924-01-01\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Eliminar",
+          "item": [
+            {
+              "name": "Libro Delirio",
+              "event": [],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": false,
+                    "type": "default"
+                  }
+                ],
+                "auth": {
+                  "type": "noauth"
+                },
+                "description": "",
+                "url": {
+                  "raw": "http://localhost:8002/api/v1/productor/eliminar-libro/common",
+                  "protocol": "http",
+                  "host": [
+                    "localhost:8002"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productor",
+                    "eliminar-libro",
+                    "common"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"titulo\": \"Delirio\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": []
+}
