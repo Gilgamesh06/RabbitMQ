@@ -31,12 +31,12 @@
 
         ```bash
             cd ../../
-            sudo docker-compose uo --build
+            sudo docker-compose up --build
         ```
     
     4. Para probar las diferentes puede usar el archivo .json de solicitudes http modificando el valor `localhost` por la ip de la maquina si no se desplego local 
 
-        [Postman Routs](../Postman/Biblioteca.json)
+        [Postman Routes](../Postman/Biblioteca.json)
 
     
     > **Nota:** Esperar 60 segundos antes de empezar a realizar las pruebas de request
