@@ -18,13 +18,9 @@ ssh student@10.6.101.95 "
     sudo systemctl start docker && sudo systemctl enable docker;
   fi;
 
-  # Clonar el repositorio si no está presente
-  if [ -d \"$WORK_DIR\" ]; then
-      echo 'Repositorio ya clonado en $WORK_DIR. Haciendo git pull...';
-      cd $WORK_DIR && git pull;  # Hace git pull para obtener los últimos cambios
-  else
-      git clone $REPO_URL $WORK_DIR;
-  fi;
+  # Clonar el repositorio
+  rm -r -f $WORK_DIR;
+  git clone $REPO_URL $WORK_DIR;
 
   # Ejecutar Docker Compose en la máquina local (version 2)
   docker stop \$(docker ps -q);
@@ -47,13 +43,9 @@ ssh student@10.6.101.96 "
   sudo apt-get install -y openjdk-17-jdk;
   java -version;
 
-  # Clonar el repositorio si no está presente
-  if [ -d \"$WORK_DIR\" ]; then
-      echo 'Repositorio ya clonado en $WORK_DIR. Haciendo git pull...';
-      cd $WORK_DIR && git pull;  # Hace git pull para obtener los últimos cambios
-  else
-      git clone $REPO_URL $WORK_DIR;
-  fi;
+  # Clonar el repositorio
+  rm -r -f $WORK_DIR;
+  git clone $REPO_URL $WORK_DIR;
 
   # Dar permisos de ejecución al archivo 'wait-for-it.sh'
   chmod 777 $WORK_DIR/agents/Consumidor-FastAPI/wait-for-it.sh;
