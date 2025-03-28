@@ -2,11 +2,25 @@
 
 # Pasos despliegue 
 
-Ejecutar comandos para desplegar la version 1
+Desplegar contenedores version 1 
 ```bash
-curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version1/deploy.sh
-chmod +x deploy.sh
-./deploy.sh
+curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version1/deploy-version1.sh
+chmod +x deploy-version1.sh
+./deploy-version1.sh
+```
+
+Desplegar contenedores version 2
+```bash
+curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version2/deploy-version2.sh
+chmod +x deploy-version2.sh
+./deploy-version2.sh
+```
+
+Desplegar contenedores version 3
+```bash
+curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version2/deploy-version3.sh
+chmod +x deploy-version3.sh
+./deploy-version3.sh
 ```
 
 
