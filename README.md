@@ -1,5 +1,14 @@
 # Taller de Software 3: `Publish-Suscribe`
 
+# Pasos despliegue 
+
+Ejecutar comandos para desplegar la version 1
+```bash
+curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version1/deploy.sh
+chmod +x deploy.sh
+```
+
+
 * Este taller tocaba realizar la creación de tres consumidores y tres productores conectados por medio de RabbitMQ 
 * Para ello se desarrollo el siguiente esquema:
 
