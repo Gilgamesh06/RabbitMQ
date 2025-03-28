@@ -6,6 +6,7 @@ Ejecutar comandos para desplegar la version 1
 ```bash
 curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version1/deploy.sh
 chmod +x deploy.sh
+./deploy.sh
 ```
 
 
