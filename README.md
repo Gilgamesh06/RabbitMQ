@@ -18,7 +18,7 @@ chmod +x deploy-version2.sh
 
 Desplegar contenedores version 3
 ```bash
-curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version2/deploy-version3.sh
+curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version3/deploy-version3.sh
 chmod +x deploy-version3.sh
 ./deploy-version3.sh
 ```
