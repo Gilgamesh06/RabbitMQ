@@ -1,29 +1,43 @@
-# Taller de Software 3: `Publish-Suscribe`
 
-# Pasos despliegue 
+# Taller de Software 3: `Publish-Subscribe`
 
-Desplegar contenedores version 1 
+## Pasos para el despliegue
+
+Para desplegar los contenedores correspondientes a cada versión del proyecto, sigue estos pasos:
+
+### Desplegar contenedores - **Versión 1**
+
 ```bash
 curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version1/deploy-version1.sh
 chmod +x deploy-version1.sh
 ./deploy-version1.sh
 ```
 
-Desplegar contenedores version 2
+### Desplegar contenedores - **Versión 2**
+
 ```bash
 curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version2/deploy-version2.sh
 chmod +x deploy-version2.sh
 ./deploy-version2.sh
 ```
 
-Desplegar contenedores version 3
+### Desplegar contenedores - **Versión 3**
+
 ```bash
 curl -O https://raw.githubusercontent.com/Gilgamesh06/RabbitMQ/main/version3/deploy-version3.sh
 chmod +x deploy-version3.sh
 ./deploy-version3.sh
 ```
 
+**Nota**: Durante la ejecución de los scripts, se te pedirá la **contraseña SSH** para proceder con el despliegue. Asegúrate de tener acceso a las máquinas de destino dentro de la red de la universidad.
 
+## Requisitos previos
+
+- **Acceso a la red de la universidad**: Los scripts deben ejecutarse dentro de la red de la universidad debido a las configuraciones de red y seguridad de los contenedores. Asegúrate de estar conectado a la red de la universidad antes de ejecutar los scripts.
+  
+- **Permisos SSH**: Se requerirá ingresar la contraseña SSH de la máquina remota en cada paso de despliegue. Esto es necesario para garantizar la seguridad y el control sobre las máquinas donde se están ejecutando los contenedores.
+
+## Descripción del Proyecto
 * Este taller tocaba realizar la creación de tres consumidores y tres productores conectados por medio de RabbitMQ 
 * Para ello se desarrollo el siguiente esquema:
 
