@@ -58,4 +58,4 @@ chmod +x deploy-version3.sh
 
     [![Version 2](/images/Version2.png)](/version2/)
 
-    [![Version 3](/images/Version3.png)]()
+    [![Version 3](/images/Version3.png)](/version3/)
