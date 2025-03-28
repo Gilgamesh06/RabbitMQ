@@ -2,49 +2,43 @@
 
 # Variables
 REPO_URL="https://github.com/Gilgamesh06/RabbitMQ.git" 
-WORK_DIR="~/agents/"
+WORK_DIR="~/agents"
 DOCKER_CMD=$(command -v docker)
-SSH_CMD=$(command -v ssh)
+JAVA_CMD=$(command -v java)
+MAVEN_CMD=$(command -v mvn)
 
-# Función para instalar Docker en la máquina remota
-install_docker() {
-  MACHINE_IP=$1
-  echo "Conectando a $MACHINE_IP para instalar Docker..."
+# Conectarse a la máquina local (10.6.101.95) y ejecutar todo en un solo bloque
+echo "Ejecutando Script en la máquina local (10.6.101.95)..."
 
-  ssh student@$MACHINE_IP "if ! command -v docker &> /dev/null; then
-      echo 'Docker no está instalado. Instalando Docker...';
-      sudo apt-get update && sudo apt-get install -y docker.io;
-      sudo systemctl start docker && sudo systemctl enable docker;
-  else
-      echo 'Docker ya está instalado.';
-  fi"
-}
+ssh student@10.6.101.95 "
+  # Instalar Docker si no está instalado
+  if ! command -v docker &> /dev/null; then
+    echo 'Docker no está instalado. Instalando Docker...';
+    sudo apt-get update && sudo apt-get install -y docker.io;
+    sudo systemctl start docker && sudo systemctl enable docker;
+  fi;
 
-# Función para clonar el repositorio remotamente
-clone_repo() {
-  MACHINE_IP=$1
-  echo "Conectando a $MACHINE_IP para clonar el repositorio..."
+  # Instalar Java si no está instalado
+  if ! command -v java &> /dev/null; then
+    echo 'Java no está instalado. Instalando OpenJDK 17...';
+    sudo apt-get install -y openjdk-17-jdk;
+    java -version;
+  fi;
 
-  ssh student@$MACHINE_IP "if [ ! -d '$WORK_DIR' ]; then
-      git clone $REPO_URL $WORK_DIR;
-  else
-      echo 'Repositorio ya clonado en $WORK_DIR';
-  fi"
-}
+  # Clonar el repositorio si no está presente
+  rm -r -f $WORK_DIR;
+  git clone $REPO_URL $WORK_DIR;
 
-# Función para ejecutar Docker Compose remotamente
-run_docker_compose() {
-  MACHINE_IP=$1
-  VERSION=$2
-  echo "Conectando a $MACHINE_IP para ejecutar docker-compose (versión $VERSION)..."
-  ssh student@$MACHINE_IP "cd $WORK_DIR/version$VERSION && docker-compose up -d"
-}
+  # Dar permisos de ejecución al archivo 'wait-for-it.sh'
+  chmod 777 $WORK_DIR/agents/Consumidor-FastAPI/wait-for-it.sh;
 
-# Ejecutar en la máquina local (10.6.101.95)
-echo "Ejecutando Script 1 (todo en la máquina local)..."
-install_docker "10.6.101.95"
-clone_repo "10.6.101.95"
-run_docker_compose "10.6.101.95" 1
+  # Ejecutar Maven Wrapper (mvnw) si es necesario
+  cd $WORK_DIR/agents/Consumidor-SpringBoot/bibliotecaMalaga && ./mvnw clean install;
+  cd $WORK_DIR/agents/Productor-SpringBoot/agregarLibro && ./mvnw clean install;
 
-echo "Despliegue completado para Script 1."
+  # Ejecutar Docker Compose en la máquina local (version 1)
+  docker stop \$(docker ps -q);
+  cd $WORK_DIR/version1 && docker-compose up -d;
+"
 
+echo "Despliegue completado para Script en la máquina local (10.6.101.95)."
