@@ -7,7 +7,7 @@ services:
     ports:
       - "8081:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-malaga:5432/biblioteca_malaga
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-malaga:5433/biblioteca_malaga
       - SPRING_DATASOURCE_USERNAME=Solus
       - SPRING_DATASOURCE_PASSWORD=123456
       - SPRING_RABBITMQ_HOST=10.6.101.95
@@ -25,7 +25,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=postgresql://Solus:123456@db-barbosa:5432/biblioteca_barbosa
+      - DATABASE_URL=postgresql://Solus:123456@db-barbosa:5435/biblioteca_barbosa
       - RABBITMQ_URL=amqp://admin:123456@10.6.101.95:5672/
     depends_on:
       - db-barbosa
@@ -73,7 +73,7 @@ services:
     ports:
       - "8001:8000"
     environment:
-      - DATABASE_URL=postgresql://Solus:123456@db-socorro:5432/biblioteca_socorro
+      - DATABASE_URL=postgresql://Solus:123456@db-socorro:5434/biblioteca_socorro
       - RABBITMQ_URL=amqp://admin:123456@10.6.101.95:5672/
     depends_on:
       - db-socorro
