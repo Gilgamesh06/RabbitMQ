@@ -52,7 +52,6 @@ ssh student@10.6.101.96 "
 
   # Ejecutar Maven Wrapper (mvnw) si es necesario
   cd $WORK_DIR/agents/Consumidor-SpringBoot/bibliotecaMalaga && ./mvnw clean install;
-  cd $WORK_DIR/agents/Productor-SpringBoot/agregarLibro && ./mvnw clean install;
 
   # Ejecutar Docker Compose en la máquina local (version 3)
   docker stop \$(docker ps -q);
@@ -78,11 +77,7 @@ ssh student@10.6.101.125 "
   rm -r -f $WORK_DIR;
   git clone $REPO_URL $WORK_DIR;
 
-  # Dar permisos de ejecución al archivo 'wait-for-it.sh'
-  chmod 777 $WORK_DIR/agents/Consumidor-FastAPI/wait-for-it.sh;
-
   # Ejecutar Maven Wrapper (mvnw) si es necesario
-  cd $WORK_DIR/agents/Consumidor-SpringBoot/bibliotecaMalaga && ./mvnw clean install;
   cd $WORK_DIR/agents/Productor-SpringBoot/agregarLibro && ./mvnw clean install;
 
   # Ejecutar Docker Compose en la máquina local (version 3)
