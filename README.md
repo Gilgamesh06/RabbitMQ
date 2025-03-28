@@ -16,7 +16,7 @@
     
     ## Versiones
 
-    [![Version 1](/images/Version1.png)](/Version%201/)
+    [![Version 1](/images/Version1.png)](/version1/)
 
     [![Version 2](/images/Version2.png)](/version2/)
 
